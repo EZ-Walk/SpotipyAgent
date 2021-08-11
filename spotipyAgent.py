@@ -6,12 +6,22 @@ import os
 import sys
 
 def main(name, pID):
+    """
+    make a request to the Spotify web api using the playlist ID "pID" we recieved as input 
+    """
     # this should start by getting the playlist's track's URIs with the endpoint below and saving that list of track_uris
     # GET https://api.spotify.com/v1/playlists/{playlist_id}/tracks
     # https://open.spotify.com/playlist/37i9dQZF1E37JNnK3FvjlV?si=m-9df_-HQlqrYHtfvx3NXA
     contents = []
-    daily1Tracks = sp.playlist(pID, fields=['tracks'])
-    for t in daily1Tracks['tracks']['items']:
+    try:
+        daily1Tracks = sp.playlist(pID, fields=['tracks'])
+
+    except Exception as e:
+        print('Error finding the playilist with the link: {}'.format(pID))
+        print('Exiting!')
+        sys.exit()
+    
+    for t in daily1Tracks['tracks']['items']: # Traverse to the 
         contents.append(t['track']['external_urls']['spotify'])
     # contents is now a populated list of 50 track URIs. Done
 
@@ -30,12 +40,26 @@ def main(name, pID):
     # This takes in a list of URIs to add
     sp.user_playlist_add_tracks('wakerXD', savedDailyID, contents)
 
+def parse_args(args):
+
+    a = [str(i) for i in args]
+
+    return a
+
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
-        print('Invalid arguments Usage: <newPlaylistName> <URL>')
+    a = parse_args(sys.argv)
+
+    if a[1] == 'help' :
+        print('Try: python3 spotipyAgent.py <name your playlist> <paste the link or URI>')
+        sys.exit()
+    
+    elif len(a) != 3:
+        print('Invalid number of arguments.  Usage: python3 spotipyAgent.py <newPlaylistName> <URL>')
         print('Exiting!')
         sys.exit()
+    else:
+        print('OK, creating the playlist "{}" based on the link you shared.'.format(str(a[1]).upper))
 
     os.environ['SPOTIPY_CLIENT_ID']='411ed1fc291749ccaf9523138836a2dd'
     os.environ['SPOTIPY_CLIENT_SECRET']='d5597fa540c84aa9ade5859bba91b681'
@@ -47,8 +71,8 @@ if __name__ == "__main__":
     if token:
         sp = spotipy.Spotify(auth=token)
 
-        name = sys.argv[1]
-        copyURL = sys.argv[2]
+        name = str(sys.argv[1])
+        copyURL = str(sys.argv[2])
         pID = copyURL.split('/')[-1].split('?')[0]
 
         print('Prelims Complete!\nCreating Playlist: {}\nBased on URL: {}'.format(name, copyURL))

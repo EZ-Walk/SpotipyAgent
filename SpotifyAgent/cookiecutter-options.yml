@@ -1,0 +1,9 @@
+default_context:
+    project_name: "SpotifyAgent"
+    app_name: "spotagent"
+    python_version: "3.8"
+    admin_user_username: "admin"
+    admin_user_email: "rocketwalker@gmail.com"
+    admin_user_password: "password"
+    use_celery: "yes"
+    wsgi_server: "uwsgi"
