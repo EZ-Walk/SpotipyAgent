@@ -21,4 +21,5 @@ setup(
         "apispec-webframeworks",
     ],
     entry_points={"flask.commands": ["spotagent = spotagent.manage:cli"]},
+    #entry point??
 )
