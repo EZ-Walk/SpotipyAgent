@@ -106,7 +106,7 @@ if __name__ == "__main__":
 
     # Uses SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, REDIRECT_URI to create an authenticated API client
     os.environ['SPOTIPY_CLIENT_ID']='acbdb84970564d238b485bd68b0f85bd'
-    os.environ['SPOTIPY_CLIENT_SECRET']='bfa9fe688cba48f4bdc88eb6e77bfb9a'
+    os.environ['SPOTIPY_CLIENT_SECRET']=''
     os.environ['REDIRECT_URI']='http://spotifyagent.com/callback'
 
     scopes = 'user-read-currently-playing user-library-read playlist-modify-public'
